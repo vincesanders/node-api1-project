@@ -41,7 +41,7 @@ server.put('/api/users/:id', (req, res) => {
 server.post('/api/users', (req, res) => {
     database.insert(req.body).then(userIDObj => {
         //returns an object containing the id of the user just created.
-        res.status(200).json(userIDObj);
+        res.status(201).json(userIDObj);
     }).catch(err => {
         console.log(err);
         res.status(500).json({ errorMessage: 'oops' });
@@ -50,7 +50,12 @@ server.post('/api/users', (req, res) => {
 
 //Removes the user with the specified id and returns the deleted user.
 server.delete('/api/users/:id', (req, res) => {
-
+    database.remove(req.params.id).then(deletedUser => {
+        res.status(200).json(deletedUser);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ errorMessage: 'oops' });
+    });
 });
 
 server.listen(5000, () => console.log('Server is listening on port 5000.'))
