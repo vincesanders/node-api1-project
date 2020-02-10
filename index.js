@@ -29,7 +29,12 @@ server.get('/api/users/:id', (req, res) => {
 
 //Updates the user with the specified id using data from the request body. Returns the modified document, NOT the original.
 server.put('/api/users/:id', (req, res) => {
-
+    database.update(req.params.id, req.body).then(user => {
+        res.status(200).json(user);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ errorMessage: 'oops' });
+    });
 });
 
 //Creates a user using the information sent inside the request body.
