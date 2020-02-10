@@ -13,17 +13,21 @@ server.get('/api/users', (req, res) => {
         res.status(200).json(users);
     }).catch(err => {
         console.log(err);
-        res.status(500).json({ errorMessage: 'oops' });
+        res.status(500).json({ errorMessage: "The users information could not be retrieved." });
     });
 });
 
 //get user object by id
 server.get('/api/users/:id', (req, res) => {
     database.findById(req.params.id).then(user => {
-        res.status(200).json(user);
+        if (!user) {
+            res.status(404).json({ message: "The user with the specified ID does not exist." });
+        } else {
+            res.status(200).json(user);
+        }
     }).catch(err => {
         console.log(err);
-        res.status(500).json({ errorMessage: 'oops' });
+        res.status(500).json({ errorMessage: "The user information could not be retrieved." });
     });
 });
 
