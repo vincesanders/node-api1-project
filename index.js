@@ -34,7 +34,11 @@ server.get('/api/users/:id', (req, res) => {
 //Updates the user with the specified id using data from the request body. Returns the modified document, NOT the original.
 server.put('/api/users/:id', (req, res) => {
     database.update(req.params.id, req.body).then(userID => {
-        res.status(200).json(userID);
+        if (!user) {
+            res.status(404).json({ message: "The user with the specified ID does not exist." });
+        } else {
+            res.status(200).json(userID);
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({ errorMessage: 'oops' });
@@ -59,10 +63,14 @@ server.post('/api/users', (req, res) => {
 //Removes the user with the specified id and returns the deleted user.
 server.delete('/api/users/:id', (req, res) => {
     database.remove(req.params.id).then(deletedUser => {
-        res.status(200).json(deletedUser);
+        if (!user) {
+            res.status(404).json({ message: "The user with the specified ID does not exist." });
+        } else {
+            res.status(200).json(deletedUser);
+        }
     }).catch(err => {
         console.log(err);
-        res.status(500).json({ errorMessage: 'oops' });
+        res.status(500).json({ errorMessage: "The user could not be removed" });
     });
 });
 
