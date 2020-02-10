@@ -29,8 +29,8 @@ server.get('/api/users/:id', (req, res) => {
 
 //Updates the user with the specified id using data from the request body. Returns the modified document, NOT the original.
 server.put('/api/users/:id', (req, res) => {
-    database.update(req.params.id, req.body).then(user => {
-        res.status(200).json(user);
+    database.update(req.params.id, req.body).then(userID => {
+        res.status(200).json(userID);
     }).catch(err => {
         console.log(err);
         res.status(500).json({ errorMessage: 'oops' });
@@ -39,7 +39,13 @@ server.put('/api/users/:id', (req, res) => {
 
 //Creates a user using the information sent inside the request body.
 server.post('/api/users', (req, res) => {
-
+    database.insert(req.body).then(userIDObj => {
+        //returns an object containing the id of the user just created.
+        res.status(200).json(userIDObj);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ errorMessage: 'oops' });
+    });
 });
 
 //Removes the user with the specified id and returns the deleted user.
