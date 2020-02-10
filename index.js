@@ -39,13 +39,17 @@ server.put('/api/users/:id', (req, res) => {
 
 //Creates a user using the information sent inside the request body.
 server.post('/api/users', (req, res) => {
-    database.insert(req.body).then(userIDObj => {
-        //returns an object containing the id of the user just created.
-        res.status(201).json(userIDObj);
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json({ errorMessage: 'oops' });
-    });
+    if (!req.body.name || !req.body.bio) {
+        res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
+    } else {
+        database.insert(req.body).then(userIDObj => {
+            //returns an object containing the id of the user just created.
+            res.status(201).json(userIDObj);
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json({ errorMessage: 'oops' });
+        });
+    }
 });
 
 //Removes the user with the specified id and returns the deleted user.
