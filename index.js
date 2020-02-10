@@ -19,7 +19,12 @@ server.get('/api/users', (req, res) => {
 
 //get user object by id
 server.get('/api/users/:id', (req, res) => {
-
+    database.findById(req.params.id).then(user => {
+        res.status(200).json(user);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({ errorMessage: 'oops' });
+    });
 });
 
 //Updates the user with the specified id using data from the request body. Returns the modified document, NOT the original.
