@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Card, Button, CardTitle, CardText, Input } from 'reactstrap';
+import './UserCard.css'
 
 export default props => {
     const [user, setUser] = useState({});
@@ -30,16 +32,16 @@ export default props => {
     const displayName = () => {
         if (!edittingName) {
             return (
-                <h3>
+                <CardTitle>
                     {props.data.name}
-                    <button onClick={() => setEdittingName(true)}>edit</button>
-                </h3>
+                    <Button onClick={() => setEdittingName(true)}>edit</Button>
+                </CardTitle>
             );
         } else {
             return (
                 <div>
-                    <input type='text' name='name' value={user.name || ''} onChange={handleChange} />
-                    <button onClick={changeName}>Change</button>
+                    <Input type='text' name='name' value={user.name || ''} onChange={handleChange} />
+                    <Button onClick={changeName}>Change</Button>
                 </div>
             );
         }
@@ -59,16 +61,16 @@ export default props => {
     const displayBio = () => {
         if (!edittingBio) {
             return (
-                <p>
+                <CardText>
                     {props.data.bio}
-                    <button onClick={() => setEdittingBio(true)}>edit</button>
-                </p>
+                    <Button onClick={() => setEdittingBio(true)}>edit</Button>
+                </CardText>
             );
         } else {
             return (
                 <div>
-                    <input type='text' name='bio' value={user.bio || ''} onChange={handleChange} />
-                    <button onClick={changeBio}>Change</button>
+                    <Input type='text' name='bio' value={user.bio || ''} onChange={handleChange} />
+                    <Button onClick={changeBio}>Change</Button>
                 </div>
             );
         }
@@ -86,10 +88,10 @@ export default props => {
     }
 
     return (
-        <div>
+        <Card className='user-card-container' >
             {displayName()}
             {displayBio()}
-            <button onClick={deleteUser}>Delete</button>
-        </div>
+            <Button onClick={deleteUser}>Delete</Button>
+        </Card>
     );
 }

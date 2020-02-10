@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserCard from './UserCard'
+import './UserList.css';
 
 export default () => {
     const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ export default () => {
     }
 
     return (
-        <div>
+        <div className='user-list'>
             {data?.map(user => <UserCard key={user.id} data={user} />)}
         </div>
     );

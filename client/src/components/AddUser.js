@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Input, Form, Label, FormGroup } from 'reactstrap';
 
 export default () => {
     const [isAdding, setIsAdding] = useState(false);
@@ -8,18 +9,22 @@ export default () => {
     const displayForm = () => {
         if (isAdding) {
             return (
-                <form onSubmit={handleSubmit} >
-                    <label>name: 
-                        <input type="text" name="name" value={newUser.name || ""} onChange={handleChange} />
-                    </label>
-                    <label>bio
-                        <textarea type="text" name="bio" value={newUser.bio || ""} onChange={handleChange} />
-                    </label>
-                    <button type='submit'>Add User</button>
-                </form>
+                <Form onSubmit={handleSubmit} >
+                    <FormGroup>
+                        <Label>name: 
+                            <Input type="text" name="name" value={newUser.name || ""} onChange={handleChange} />
+                        </Label>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>bio
+                            <Input type="textarea" name="bio" value={newUser.bio || ""} onChange={handleChange} />
+                        </Label>
+                    </FormGroup>
+                    <Button type='submit'>Add User</Button>
+                </Form>
             );
         } else {
-            return (<button onClick={() => setIsAdding(true)}>Add User</button>);
+            return (<Button onClick={() => setIsAdding(true)}>Add User</Button>);
         }
     }
 
