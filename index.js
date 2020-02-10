@@ -1,11 +1,13 @@
 // implement your API here
 const express = require('express');
+const cors = require('cors');
 
 const database = require('./data/db.js');
 
 const server = express();
 
 server.use(express.json());
+server.use(cors());
 
 //get array of all user objects
 server.get('/api/users', (req, res) => {
@@ -76,7 +78,7 @@ server.delete('/api/users/:id', (req, res) => {
             res.status(404).json({ message: "The user with the specified ID does not exist." });
         } else {
             deletedUser = user;
-            
+
             database.remove(req.params.id).then(numDeleted => {
                 res.status(200).json(deletedUser);
             }).catch(err => {
@@ -90,4 +92,4 @@ server.delete('/api/users/:id', (req, res) => {
     });
 });
 
-server.listen(5000, () => console.log('Server is listening on port 5000.'))
+server.listen(5000, () => console.log('Server is listening on port 5000.'));
